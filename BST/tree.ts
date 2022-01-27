@@ -1,4 +1,12 @@
+type Nullable<T> = T | null;
+
 class TreeNode<T> {
+  constructor(d: T) {
+    this._data = d;
+    this._left = null;
+    this._right = null;
+  }
+
   private _data: T;
   public get data(): T {
     return this._data;
@@ -22,15 +30,13 @@ class TreeNode<T> {
   public set right(node: Nullable<TreeNode<T>>) {
     this._right = node;
   }
-
-  constructor(d: T) {
-    this._data = d;
-    this._left = null;
-    this._right = null;
-  }
 }
 
 class BinaryTree<T> {
+  constructor() {
+    this._root = null;
+  }
+
   private _root: Nullable<TreeNode<T>>;
   public get root(): Nullable<TreeNode<T>> {
     return this._root;
@@ -38,10 +44,11 @@ class BinaryTree<T> {
   public set root(node: Nullable<TreeNode<T>>) {
     this._root = node;
   }
-  constructor() {
-    this._root = null;
-  }
-
+  /**
+   * Insert a new node into the binary search tree.
+   * @param data The data to be added to the tree structure
+   * @returns true if operation is successful, false if failed.
+   */
   insert(data: T): boolean {
     let newNode = new TreeNode<T>(data);
 
@@ -75,9 +82,35 @@ class BinaryTree<T> {
       return true;
     }
   }
-}
 
-type Nullable<T> = T | null;
+  /**
+   * Searches the binary tree.
+   * @param query The data that is being searched for
+   * @returns The TreeNode the data is stored on or null if not found.
+   */
+  find(query: T): Nullable<TreeNode<T>> | null {
+    if (!this._root) {
+      return null;
+    }
+    let current = this._root;
+
+    while (current.data !== query) {
+      if (current.data < query) {
+        if (!current.right) {
+          console.log(current);
+          return null;
+        }
+        current = current.right;
+      } else if (current.data > query) {
+        if (!current.left) {
+          return null;
+        }
+        current = current.left;
+      }
+    }
+    return current;
+  }
+}
 
 let tree = new BinaryTree<number>();
 
@@ -85,4 +118,6 @@ tree.insert(12);
 tree.insert(3);
 tree.insert(21);
 tree.insert(18);
-console.log(tree);
+console.log(tree.find(13));
+
+
