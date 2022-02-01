@@ -88,7 +88,7 @@ class BinaryTree<T> {
    * @param query The data that is being searched for
    * @returns The TreeNode the data is stored on or null if not found.
    */
-  find(query: T): Nullable<TreeNode<T>> | null {
+  find(query: T): Nullable<TreeNode<T>> {
     if (!this._root) {
       return null;
     }
