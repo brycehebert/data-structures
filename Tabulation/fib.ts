@@ -1,0 +1,16 @@
+const fib = (n: number): number => {
+  let table: number[] = Array(n + 1).fill(0);
+  table[1] = 1;
+
+  for (let i = 0; i <= n; i++) {
+    table[i + 1] += table[i];
+    table[i + 2] += table[i];
+  }
+
+  return table[n];
+}
+
+console.log(fib(7));
+console.log(fib(51));
+
+export {}; // Just making TypeScript not worry about redeclaration
